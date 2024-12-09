@@ -1,13 +1,12 @@
 global:
   env: production
   spec:
-    project: test
+    project: default
     destination:
       server: https://kubernetes.default.svc
-      namespace: test
+      namespace: default
     source:
       targetRevision: HEAD
-      path: production
 
 argocdApplications:
   tutorial:
@@ -16,3 +15,4 @@ argocdApplications:
     disable: false
     name: tutorial
     path: apps/tutorial/overlay/production
+    namespace: default
