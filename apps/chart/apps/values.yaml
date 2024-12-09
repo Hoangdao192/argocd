@@ -10,7 +10,7 @@ global:
 
 argocdApplications:
   tutorial:
-    repoURL: http://source.cyberspace.vn/tutorial/argocd.git
+    repoURL: https://github.com/Hoangdao192/argocd.git
     disableAutomated: true
     disable: false
     name: tutorial
