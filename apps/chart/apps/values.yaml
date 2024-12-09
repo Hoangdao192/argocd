@@ -15,4 +15,4 @@ argocdApplications:
     disable: false
     name: tutorial
     path: apps/tutorial/overlay/production
-    namespace: argocd
+    namespace: default
