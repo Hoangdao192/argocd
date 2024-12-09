@@ -23,10 +23,10 @@ spec:
         app.kubernetes.io/component: backend
     spec:
       containers:
-        - name: nginx
+        - name: tutorial
           image: registry.cyberspace.vn/tla/tutorial:v1.0.0
           ports:
-          - containerPort: 80
+          - containerPort: 8080
           env:
           - name: DOMAIN
             value: "trolyao.org"
@@ -34,7 +34,7 @@ spec:
             value: "8080"
           livenessProbe:
             httpGet:
-              path: /api/v1/ping
+              path: /api/v1/health
               port: 8080
             initialDelaySeconds: 10
             periodSeconds: 10
