@@ -1,0 +1,18 @@
+global:
+  env: production
+  spec:
+    project: test
+    destination:
+      server: https://kubernetes.default.svc
+      namespace: test
+    source:
+      targetRevision: HEAD
+      path: production
+
+argocdApplications:
+  tutorial:
+    repoURL: http://source.cyberspace.vn/tutorial/argocd.git
+    disableAutomated: true
+    disable: false
+    name: tutorial
+    path: apps/tutorial/overlay/production

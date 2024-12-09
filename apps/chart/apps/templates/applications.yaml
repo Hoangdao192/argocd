@@ -1,0 +1,47 @@
+{{- range $app := .Values.argocdApplications -}}
+{{ if not .disable }}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: {{ .name }}
+  namespace: {{ .namespace }}
+spec:
+  project: {{ $.Values.global.spec.project }}
+  source:
+    repoURL:  {{ .repoURL }}
+    targetRevision: {{ default $.Values.global.spec.source.targetRevision .targetRevision }}
+    {{- if .path }}
+    path: {{ .path }}
+    {{- end }}
+    {{- if .helmValueFiles }}
+    helm:
+      valueFiles:
+        - {{ .helmValueFiles }}
+    {{- end }}
+    {{- if .chart }}
+    chart: {{ .chart }}
+    helm:
+      parameters:
+        - name: global.imageRegistry
+          value: {{ .imageRegistry }}
+        - name: global.storageClass
+          value: {{ .storageClass }}
+        {{- if .redisPassword }}
+        - name: global.redis.password
+          value: {{ .redisPassword }}
+        {{- end }}
+    {{- end }}
+  destination:
+    namespace: {{ default $.Values.global.spec.destination.namespace  .namespace }}
+    server: {{ $.Values.global.spec.destination.server }}
+  syncPolicy:
+    {{- if not .disableAutomated }}
+    automated:
+      prune: false
+      selfHeal: true
+    {{- end }}
+    syncOptions:
+      - CreateNamespace=true
+---
+{{- end }}
+{{- end }}

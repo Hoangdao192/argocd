@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: tlacc-apps
+spec:
+  destination:
+    name: ''
+    namespace: default
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: app-of-apps/argo-apps-chart
+    repoURL: 'http://source.cyberspace.vn/tutorial/argocd.git'
+    targetRevision: HEAD
+    helm:
+      valueFiles:
+        - values-staging.yaml
+  sources: []
+  project: tutorial
+  syncPolicy:
+    syncOptions:
+      - PrunePropagationPolicy=background
